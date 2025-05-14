@@ -10,7 +10,7 @@ def tower_of_hanoi(n, source, target, auxiliary, step=[1]):
         step[0] += 1
     else:
         tower_of_hanoi(n - 1, source, auxiliary, target, step)
-        print('Step {step[0]}: Move WHEEL #{n} from pillar {source} to {target}')
+        print(f'Step {step[0]}: Move WHEEL #{n} from pillar {source} to {target}')
         step[0] += 1
         tower_of_hanoi(n - 1, auxiliary, target, source, step)
 
