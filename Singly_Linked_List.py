@@ -63,7 +63,7 @@ class Singly_Linked_List:
 
         current = self.head
         while current.next:
-            print(f'{current.data}, ', end='')
+            print(f'{current.data} --> ', end='')
             current = current.next
         print(current.data)
 
@@ -211,7 +211,7 @@ class Singly_Linked_List:
 
     def reverse_list(self):
 
-        ''' reverses the linked list '''
+        ''' reverses the linked list, returns a new list object '''
 
         # idea to loop through current list and insert_at_head() into another list object
 
