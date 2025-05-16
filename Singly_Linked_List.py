@@ -209,9 +209,9 @@ class Singly_Linked_List:
         return False
     
 
-    def reverse_list(self):
+    def reverse(self):
 
-        ''' reverses the linked list, returns a new list object '''
+        ''' reverses the linked list '''
 
         # idea to loop through current list and insert_at_head() into another list object
 
@@ -238,7 +238,8 @@ class Singly_Linked_List:
         # insert last value for case where Node.next == None
         new_linked_list.insert_at_head(current_node.data)
 
-        return new_linked_list
+        # return new_linked_list
+        self.head = new_linked_list.head
 
 
 
@@ -272,5 +273,5 @@ print(mylist.length())              # 4
 
 print('-' * 30)
 
-reversed_list = mylist.reverse_list()
-reversed_list.display_list()        # ['end', 7, 5, 3]
+mylist.reverse()
+mylist.display_list()        # ['end', 7, 5, 3]

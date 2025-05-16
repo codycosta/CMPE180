@@ -203,14 +203,18 @@ class Doubly_Linked_List:
             # value not found
             return False
         
+        # find if data exists in list first
         if not search(data):
             print(f'given value {data} not found in list, value {value} was not inserted')
             return
         
+        # new data
         new_node = Node(value)
         
+        # start pointer
         current = self.head
 
+        # traverse through list
         while current.next and current.data != data:
             current = current.next
 
@@ -228,8 +232,36 @@ class Doubly_Linked_List:
 
 
     def reverse(self):
-        ...
+        
+        ''' reverses the linked list '''
 
+        # idea to loop through current list and insert_at_head() into another list object
+
+        # create new list object
+        new_linked_list = Doubly_Linked_List()
+
+        # catch empty list case
+        if self.head is None:
+            print('list is empty, can\'t reverse')
+            return
+
+        # start pointer
+        current_node = self.head
+
+        # loop through nodes
+        while current_node.next:
+
+            # insert data at head of new list
+            new_linked_list.prepend(current_node.data)
+
+            # increment pointer
+            current_node = current_node.next
+        
+        # insert last value for case where Node.next == None
+        new_linked_list.prepend(current_node.data)
+
+        # return new_linked_list
+        self.head = new_linked_list.head
 
 
 ''' testing code '''
@@ -260,3 +292,6 @@ mylist.display_backward()               # [5, 3, 2]
 
 mylist.insert_after(3, 7)
 mylist.display_forward()                # [2, 3, 7, 5]
+
+mylist.reverse()
+mylist.display_forward()                # [5, 7, 3, 2]
