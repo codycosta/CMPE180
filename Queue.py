@@ -32,7 +32,8 @@ Create a way to queue up several items
 Add new items to the queue
 Peek the next in queue (the front of the queue)
 Remove some items from the queue
-Print out the queue after each of these operations
+
+* Print out the queue after each of these operations
 '''
 
 
@@ -92,11 +93,20 @@ class Queue:
 
 def main():
     my_queue = Queue()
-    my_queue.enqueue([1, 2, 3])
-    my_queue.enqueue('cody costa')
+    my_queue.enqueue([1, 2, 3, 'banana', 3.14, 'Cody Costa', 71])
     my_queue.display()
+    print()
+    my_queue.enqueue((12, 24.1))
+    my_queue.display()
+    print()
+    front = my_queue.peek()
+    print(f'{front=}')
+    my_queue.display()
+    print()
     my_queue.dequeue()
-    print(my_queue.is_empty())
+    my_queue.dequeue()
+    my_queue.display()
+    print()
 
 
 
