@@ -24,17 +24,18 @@ append(data) - Add a node with data to the end of the list.
 
 prepend(data) - Add a node with data to the beginning of the list.
 
-TODO: delete(data) - Remove the first node containing the given data.
+delete(data) - Remove the first node containing the given data.
 
-TODO: display_forward() - Print all node data from head to tail.
+display_forward() - Print all node data from head to tail.
 
-TODO: display_backward() - Print all node data from tail to head.
+display_backward() - Print all node data from tail to head.
 
+--------------------------------------------------------------------------
 Bonus (optional)
 
 Implement the following additional features:
 
-TODO: insert_after(target_data, new_data) - Insert a new node with new_data after the node with target_data.
+insert_after(target_data, new_data) - Insert a new node with new_data after the node with target_data.
 
 TODO: reverse() - Reverse the linked list in-place.
 '''
@@ -52,9 +53,10 @@ class Doubly_Linked_List:
     def __init__(self):
         self.head = None
 
-    def display_list(self):
 
-        ''' displays the contents of the linked list '''
+    def display_forward(self):
+
+        ''' displays the contents of the linked list from head to tail '''
 
         if self.head is None:
             print('List is empty, nothing to display')
@@ -154,14 +156,76 @@ class Doubly_Linked_List:
         link.prev = current
 
 
-    def display_forward(self):
-        ...
-
     def display_backward(self):
-        ...
+        
+        ''' displays list contents from tail to head (reverse order) '''
 
-    def insert_after(self, data):
-        ...
+        if self.head is None:
+            print('List is empty, nothing to display')
+            return
+        
+        # establish starting point at end of list
+        current = self.head
+        while current.next:
+            current = current.next
+
+        # loop backwards through list
+        while current.prev:
+            print(f'{current.data} <--> ', end='')
+            current = current.prev
+        print(current.data)
+
+    
+    ''' bonus functions '''
+
+    def insert_after(self, data, value):
+        
+        ''' inserts the given value after the given data point in the list '''
+        # reuse search func from Singly_Linked_List lol
+        def search(data):
+
+            ''' searches for a given value within the list, returns True/False '''
+
+            # if first node has value
+            if self.head.data == data:
+                return True
+            
+            # init pointer
+            current_node = self.head
+
+            # loop through nodes, checking for value, break if found
+            while current_node.next:
+                if current_node.data == data:
+                    return True
+                
+                current_node = current_node.next
+
+            # value not found
+            return False
+        
+        if not search(data):
+            print(f'given value {data} not found in list, value {value} was not inserted')
+            return
+        
+        new_node = Node(value)
+        
+        current = self.head
+
+        while current.next and current.data != data:
+            current = current.next
+
+        # current.data should be the given {data} point now
+        # take note of end link
+        link = current.next
+
+        # insert new value
+        current.next = new_node
+        new_node.next = link
+        link.prev = new_node
+        new_node.prev = current
+
+        # current <--> new <--> link
+
 
     def reverse(self):
         ...
@@ -172,22 +236,27 @@ class Doubly_Linked_List:
 
 mylist = Doubly_Linked_List()           # empty list []
 mylist.append(4)
-mylist.display_list()                   # [4]
+mylist.display_forward()                # [4]
 
 mylist.append(5)
-mylist.display_list()                   # [4, 5]
+mylist.display_forward()                # [4, 5]
 
 mylist.prepend(3)
-mylist.display_list()                   # [3, 4, 5]
+mylist.display_forward()                # [3, 4, 5]
 
 mylist.prepend(2)
-mylist.display_list()                   # [2, 3, 4, 5]
+mylist.display_forward()                # [2, 3, 4, 5]
 
 mylist.prepend(4)
-mylist.display_list()                   # [4, 2, 3, 4, 5]
+mylist.display_forward()                # [4, 2, 3, 4, 5]
 
 mylist.delete(4)
-mylist.display_list()                   # [2, 3, 4, 5]
+mylist.display_forward()                # [2, 3, 4, 5]
 
 mylist.delete(4)
-mylist.display_list()                   # [2, 3, 5]
+mylist.display_forward()                # [2, 3, 5]
+
+mylist.display_backward()               # [5, 3, 2]
+
+mylist.insert_after(3, 7)
+mylist.display_forward()                # [2, 3, 7, 5]
