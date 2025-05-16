@@ -37,7 +37,7 @@ Implement the following additional features:
 
 insert_after(target_data, new_data) - Insert a new node with new_data after the node with target_data.
 
-TODO: reverse() - Reverse the linked list in-place.
+reverse() - Reverse the linked list in-place.
 '''
 
 
