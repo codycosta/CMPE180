@@ -16,7 +16,7 @@ insert_at_head(data) - Insert a new node at the beginning (10 Marks)
 
 insert_at_tail(data) - Insert a new node at the end (10 Marks)
 
-TODO: insert_at_position(position, data) - Insert at a specific 0-based position (handle out-of-bounds) (10 Marks)
+insert_at_position(position, data) - Insert at a specific 0-based position (handle out-of-bounds) (10 Marks)
 
 TODO: delete_node_by_value(value) - Delete the first node with the given value (10 Marks)
 
@@ -109,7 +109,6 @@ class Sinlgy_Linked_List:
 
     
     def insert_at_position(self, position, data):
-        pass
         
         ''' inserts a new value at the specified position in the list '''
 
@@ -142,13 +141,23 @@ class Sinlgy_Linked_List:
 
 
 
+''' testing code down here '''
 
 mylist = Sinlgy_Linked_List()
-print(mylist.length())
+# print(mylist.length())
 
 mylist.insert_at_head(5)
-print(mylist.head.data, mylist.head.next)
-print(mylist.length())
+# print(mylist.head.data, mylist.head.next)
+# print(mylist.length())
 
 mylist.insert_at_head(4)
-print(mylist.head.data)
+# print(mylist.head.data)
+
+mylist.insert_at_position(1, 3)
+
+current = mylist.head
+while current.next:
+    print(current.data)
+    current = current.next
+
+print(current.data)
