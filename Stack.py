@@ -31,7 +31,7 @@ display(self): Print the stack from top to bottom.
 Use print statements where necessary to visualize each operation.
 
 --------------------------------------------------------------------------
-main program
+Main program
 
 Solve the following problems using your Stack class:
 
@@ -42,10 +42,10 @@ Reverse a String Using a Stack
 Write a function that uses a stack to reverse a given string.
 
 Evaluate Postfix Expression
-TODO: Implement a postfix (Reverse Polish Notation) expression evaluator, e.g., "3 4 + 2 * 7 /".
+Implement a postfix (Reverse Polish Notation) expression evaluator, e.g., "3 4 + 2 * 7 /".
 
 Undo Operation Simulation
-TODO: Simulate an undo feature using a stack where actions are pushed and undone via pop.
+Simulate an undo feature using a stack where actions are pushed and undone via pop.
 '''
 
 
@@ -133,8 +133,8 @@ def parentheses_checker(text):
     ''' checks if a string of brackets is balanced (opened and closed properly) '''
 
     # check for even number of elements in input text
-    if len(text) % 2:
-        return False
+    # if len(text) % 2:
+    #     return False
     
     # push parenthetic state to new stack
     order_of_operations = Stack()
@@ -165,23 +165,110 @@ def parentheses_checker(text):
                     order_of_operations.pop()
                 else:
                     return False
-                
+                          
     if order_of_operations.is_empty():
         return True
     
     return False
 
 
+def undo(actions: Stack):
+    ''' undo an action by popping it from the stack '''
+    
+    if not actions.is_empty():
+        actions.pop()
 
+
+def postfix_interpreter(expression):
+    ''' evaluates a math expression in reverse polish notation '''
+
+    myStack = Stack()
+    tokens = expression.split()
+
+    # loop through expression
+    for token in tokens:
+
+        # if math operation
+        if token in ['+', '-', '*', '/']:
+
+            # if there's not 2 items to combine mathematically, end program
+            if myStack.size() < 2:
+                print('not enough arguments to evaluate')
+                return
+            
+            # get the 2 items to combine mathematically
+            a = float(myStack.pop())
+            b = float(myStack.pop())
+
+            # math
+            if token == '+':
+                result = a + b
+            elif token == '-':
+                result = a - b
+            elif token == '*':
+                result = a * b
+            elif token == '/':
+                try:
+                    result = a / b
+                except ZeroDivisionError:
+                    print(f'division by 0 occurred, ending program')
+                    return None
+                
+            # add result to stack for next operation
+            myStack.push(result)
+
+        # add new expression item to stack
+        else:
+            try: 
+                myStack.push(token)
+            except ValueError:
+                print(f'invalid token: {token}')
+                return None
+            
+    # if end result is accompanied by an extra character in the expression
+    if myStack.size() != 1:
+        print('invalid expression, too many arguments')
+        return None
+    
+    # else, only the result remains
+    result = myStack.pop()
+    return result                
+
+
+            
 
 def main():
     # reverse string
+    print('Reverse a string:\n')
     text = 'Cody Costa'
     text_rev = reverse_string(text)
     print(text, text_rev)
+    print('\n')
 
     # parentheses checker
+    print('Parentheses Balance Checker:\n')
     print(parentheses_checker(r'(()[]){}'))
+    print('\n')
+
+    # undo action
+    print('Undo Action:\n')
+    log = Stack()
+    actions = ['up', 'down', 'left', 'right']
+    for i in actions:
+        log.push(i)
+    log.display()
+
+    undo(log)
+    log.display()
+    print('\n')
+
+    # postfix
+    print('Reverse Polish Interpreter:\n')
+    tests = ['3 4 + 2 * 7 /', '2 2 +', '0 1 /']
+    for t in tests:
+        result = postfix_interpreter(t)
+        print(f'{t=}, {result=}')
+
 
 
 if __name__ == '__main__':
