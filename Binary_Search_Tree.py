@@ -46,14 +46,18 @@ class Binary_Search_Tree:
     def insert(self, data):
         ''' inserts a given value into the tree '''
 
+        # data to include
         new_node = Node(data)
 
+        # check for empty tree
         if self.root == None:
             self.root = new_node
 
+        # init root pointer
         current = self.root
 
         while True:
+            # look at right side
             if data > current.value:
                 if current.right:
                     current = current.right
@@ -61,6 +65,7 @@ class Binary_Search_Tree:
                     current.right = new_node
                     break
 
+            # look at left side
             elif data < current.value:
                 if current.left:
                     current = current.left
@@ -68,15 +73,37 @@ class Binary_Search_Tree:
                     current.left = new_node
                     break
 
-        
-
-                
-
-            
-
-    
+    # TODO
     def delete(self, data):
-        ...
+        ''' removes an item from the tree and restructures the tree '''
+        
+        if self.root == None:
+            print('No tree elements, can\'t remove what isn\'t there')
+            return
+        
+        # init root pointer
+        current = self.root
 
+        # check for current value
+        if current.value == data:
+            ...
+
+        # will come back to this one
 
     
+    def print_tree(self):
+        ''' prints the tree with structured graphics '''
+        
+        tree = {}
+
+        # loop through tree and fill dict with data
+        if self.root == None:
+            print('no tree to display')
+            return
+        
+        current = self.root
+        tree['root'] = current.value
+
+        while True:
+            row_elements = []
+            
