@@ -52,18 +52,25 @@ class Binary_Search_Tree:
         # check for empty tree
         if self.root == None:
             self.root = new_node
+            return
 
         # init root pointer
+        # root_val = self.root.value
         current = self.root
 
         while True:
+            # check if value already exists in tree
+            if data == current.value:
+                print(f'{data} already exists in tree')
+                return
+            
             # look at right side
             if data > current.value:
                 if current.right:
                     current = current.right
                 else:
                     current.right = new_node
-                    break
+                    return
 
             # look at left side
             elif data < current.value:
@@ -71,7 +78,7 @@ class Binary_Search_Tree:
                     current = current.left
                 else:
                     current.left = new_node
-                    break
+                    return
 
     # TODO
     def delete(self, data):
@@ -93,17 +100,74 @@ class Binary_Search_Tree:
     
     def print_tree(self):
         ''' prints the tree with structured graphics '''
-        
-        tree = {}
 
-        # loop through tree and fill dict with data
         if self.root == None:
             print('no tree to display')
             return
         
-        current = self.root
-        tree['root'] = current.value
+        tree = []
 
-        while True:
-            row_elements = []
+        def print_node(node, row=0):
+            ''' prints the node + children '''
+
+            # row += 1
+
+            children = (node.left, node.right)
+            if not children:
+                return
             
+            for child in children:
+                if child == None:
+                    continue
+                print_node(child, row=row+1)
+
+            # print(f'{node.value}')
+
+            tree.append((row, node.value))
+
+        
+        current = self.root
+        print_node(current)
+
+        tree.sort()
+        print(tree)
+
+        cur_row = 0
+
+        for (row, value) in tree:
+            
+            if row > cur_row:
+                print('\n\n')
+
+            cur_row = row    
+            
+            num_whitespace = ' ' * (60 // ( (2**row) + 1 ))
+            print(f'{num_whitespace}{value}', end='')
+            # print(f'{value}{num_whitespace}', end='')
+
+            
+
+        
+
+
+
+def main():
+    tree = Binary_Search_Tree()
+    # root
+    tree.insert(4)
+
+    # children
+    tree.insert(5)
+    tree.insert(3)
+
+    # grandchildren of 3
+    tree.insert(2)
+    tree.insert(3.5)
+
+    # grandchildren of 5
+    tree.insert(4.5)
+    tree.insert(6)
+
+    tree.print_tree()
+
+main()
