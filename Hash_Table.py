@@ -56,7 +56,7 @@ class HashTable:
 
         # typical and basic hash function 
         if type(key) == str:
-            hash_val = sum(ord(char) for char in key) % self.size
+            hash_val = sum(ord(char.upper()) for char in key) % self.size
         else:
             hash_val = key % self.size
 
@@ -98,23 +98,101 @@ class HashTable:
     def get(self, key):
         ''' retreives value for a given key '''
         
+        # index based on hash function
         index = self._hash(key)
 
+        # start iterator Node
         current = self.slots[index]
+
+        # continue so long as another Node follows
         while current:
+
+            # return match
             if current.key == key:
                 return current.value
             
+            # update pointer
             current = current.next
 
+        # loop done, key not found in Node list at the hash index
         return None
         
 
-
-
     def delete(self, key):
-        ...
+        ''' removes the key-value pair for the given key '''
+        
+        # get index for given key
+        index = self._hash(key)
+
+        # check if key exists in table first
+        if not self.get(key):
+            print(f'{key} does not exist in table')
+            return
+
+        # find key-value pair for index in hash table
+        current = self.slots[index]
+
+        # skip first node in linked list
+        if current.key == key:
+            self.slots[index] = current.next
+            return
+
+        # loop to node that matches key
+        while current.next and current.next.key != key:
+            current = current.next
+
+        # skip node with matching key
+        current.next = current.next.next
 
 
     def display(self):
-        ...
+        ''' display contents of the hash table '''
+
+        for idx, lst in enumerate(self.slots):
+
+            if lst is None:
+                print(f'Linked list for index {idx} is empty, nothing to display')
+                continue
+            
+            current = lst
+            index = self._hash(current.key)
+
+            print(f'{index}:\t', end='')
+
+            while current.next:
+                print(f'({current.key}, {current.value}) --> ', end='')
+                current = current.next
+            print(f'({current.key}, {current.value})')
+
+
+
+def main():
+    import random
+
+    ht = HashTable(20)
+    # ht.display()
+
+    fruits = ['apple', 'banana', 'strawberry', 'grape', 'orange', 'dragonfruit', 'pineapple', 'mango', 'blueberry', 'nectarine']
+    vals = [random.randint(0, 50) for _ in range(10)]
+
+    for idx, name in enumerate(fruits):
+        ht.insert(name, vals[idx])
+
+    print('\nInitial Build of Hash Table')
+    ht.display()
+    print('\n\n')
+
+    # get values for 2 keys
+    print('Retreive 2 values from table')
+    print(f'Key: apple == {ht.get('apple')}\nKey: grape == {ht.get('grape')}')
+    print('\n\n')
+
+    # remove an element
+    print('Modified Hash Table')
+    ht.delete('pineapple')
+    ht.display()
+    print()
+
+
+
+main()
