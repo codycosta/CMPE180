@@ -15,7 +15,7 @@ Define a class Node with:
 Attributes: value, left, right.
 
 Define a class BinarySearchTree with:
-TODO: Method insert(value) - inserts value in the BST.
+Method insert(value) - inserts value in the BST.
 TODO: Method delete(value) - delete the value and restructure the tree.
 TODO: Method in_order_traversal(node) - returns values in in-order.
 TODO: Method pre_order_traversal(node) - returns values in pre-order.
@@ -44,41 +44,50 @@ class Binary_Search_Tree:
 
     
     def insert(self, data):
-        ''' inserts a given value into the tree '''
+        ''' inserts a given value or set of values into the tree '''
 
-        # data to include
-        new_node = Node(data)
+        def insert_value(self, value):
+            ''' inserts a single given value into the tree '''
 
-        # check for empty tree
-        if self.root == None:
-            self.root = new_node
-            return
+            # data to include
+            new_node = Node(value)
 
-        # init root pointer
-        # root_val = self.root.value
-        current = self.root
-
-        while True:
-            # check if value already exists in tree
-            if data == current.value:
-                print(f'{data} already exists in tree')
+            # check for empty tree
+            if self.root == None:
+                self.root = new_node
                 return
-            
-            # look at right side
-            if data > current.value:
-                if current.right:
-                    current = current.right
-                else:
-                    current.right = new_node
-                    return
 
-            # look at left side
-            elif data < current.value:
-                if current.left:
-                    current = current.left
-                else:
-                    current.left = new_node
+            # init root pointer
+            # root_val = self.root.value
+            current = self.root
+
+            while True:
+                # check if value already exists in tree
+                if value == current.value:
+                    print(f'{value} already exists in tree')
                     return
+                
+                # look at right side
+                if value > current.value:
+                    if current.right:
+                        current = current.right
+                    else:
+                        current.right = new_node
+                        return
+
+                # look at left side
+                elif value < current.value:
+                    if current.left:
+                        current = current.left
+                    else:
+                        current.left = new_node
+                        return
+
+        if type(data) in [int, float]:
+            data = [data]
+        
+        for item in data:
+            insert_value(self, item)
 
     # TODO
     def delete(self, data):
@@ -130,7 +139,7 @@ class Binary_Search_Tree:
         print_node(current)
 
         tree.sort()
-        print(tree)
+        # print(tree)
 
         cur_row = 0
 
@@ -168,6 +177,12 @@ def main():
     tree.insert(4.5)
     tree.insert(6)
 
-    tree.print_tree()
+    # tree.print_tree()
+
+
+    tree2 = Binary_Search_Tree()
+    lst = [6, 4.5, 3.5, 2, 3, 5, 4, 1]
+    tree2.insert(lst)
+    tree2.print_tree()
 
 main()
